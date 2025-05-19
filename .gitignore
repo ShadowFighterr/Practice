@@ -19,7 +19,6 @@ venv/
 *.swp
 
 # Model and dataset files (if you don't want them in version control)
-lenta_nb_model.joblib
 lenta-ru-news.csv
 
 # VSCode settings (optional)
