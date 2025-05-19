@@ -17,3 +17,6 @@ flask
 
 # Progress bar
 tqdm
+
+#Deployment
+gunicorn
