@@ -3,6 +3,8 @@ Group: IT-2305.
 Team members: Azamat Ubaidullauly, Astana Khunakhan
 Instructor: Ainur Mukashova
 
+Deployed website: https://mlprediction-model.onrender.com/
+
 ```markdown
 # Lenta.ru News Topic Classification
 
