@@ -1,0 +1,19 @@
+# Data processing & ML
+pandas
+numpy
+scikit-learn
+joblib
+
+# Text preprocessing (choose one)
+nltk
+pymorphy3
+pymorphy3-dicts-ru
+
+# Flask web service
+fastapi
+uvicorn[standard]
+pydantic
+flask 
+
+# Progress bar
+tqdm

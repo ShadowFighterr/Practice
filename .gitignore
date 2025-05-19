@@ -1,0 +1,33 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+
+# Virtual environment
+venv/
+.env/
+
+# Jupyter Notebook checkpoints (if any in future)
+.ipynb_checkpoints
+
+# MacOS
+.DS_Store
+
+# Logs and temporary files
+*.log
+*.tmp
+*.swp
+
+# Model and dataset files (if you don't want them in version control)
+lenta_nb_model.joblib
+lenta-ru-news.csv
+
+# VSCode settings (optional)
+.vscode/
+
+# Python environment files
+*.env
+*.venv
+*.egg-info/
+dist/
+build/
