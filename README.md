@@ -1,232 +1,190 @@
-Machine Learning Algorithms final project.
-Group: IT-2305.
-Team members: Azamat Ubaidullauly, Astana Khunakhan
-Instructor: Ainur Mukashova
+Azamat, wishing you a productive coding session today! 🌟
 
-Deployed website: https://mlprediction-model.onrender.com/
+Here’s your text **formatted as a clean README.md**, with your exact wording unchanged:
+
+---
 
 ```markdown
-# Lenta.ru News Topic Classification
+# News Classifier
 
-This repository contains a machine learning pipeline and a simple web application for classifying Lenta.ru news articles into predefined topics. The pipeline uses text preprocessing in Russian, vectorization, and a Multinomial Naive Bayes classifier. A Flask-based web interface allows users to input arbitrary news text and get a predicted topic.
+This is an interactive web application for classifying news articles into categories using a pre-trained machine learning model. The application is developed with FastAPI for the backend, PostgreSQL for storing prediction history, Jinja2 for rendering HTML templates, and CSS and JavaScript for a dynamic user interface.
 
-## Table of Contents
+## Description
 
-- [Project Overview](#project-overview)  
-- [Dataset](#dataset)  
-- [Comparative Analysis of Methods](#comparative-analysis-of-methods)  
-- [Why Multinomial Naive Bayes?](#why-multinomial-naive-bayes)  
-- [Project Structure](#project-structure)  
-- [Installation](#installation)  
-- [Usage](#usage)  
-  - [Data Preprocessing & Model Training](#data-preprocessing--model-training)  
-  - [Launching the Web App](#launching-the-web-app)  
-- [Dependencies](#dependencies)  
-- [Contributing](#contributing)  
-- [Contact](#contact)  
+The application allows the user to enter news text, get a predicted category based on a trained Naive Bayes model, and saves each prediction to a database. Previous predictions are displayed in a convenient sidebar with expandable sections for viewing the full news text and result.
 
----
+## Key Features
 
-## Project Overview
-
-This project aims to build a multiclass text classifier that predicts the topic of a Russian-language news article from the Lenta.ru dataset. We select five topics:  
-- **Путешествия** (Travel)  
-- **Ценности** (Values)  
-- **Мир** (World)  
-- **Наука и техника** (Science & Technology)  
-- **Экономика** (Economics)  
-
-After preprocessing and vectorizing the text, various classification algorithms were compared. The final choice—Multinomial Naive Bayes—balances high accuracy with low inference/training time.
-
-A simple Flask web application (`app.py`) allows users to enter arbitrary news text and receive a predicted topic label in real time.
-
----
-
-## Dataset
-
-We use the publicly available Lenta.ru news dataset (`lenta-ru-news.csv`). For each of the five selected topics, we sample up to 2,000 articles, yielding a combined subset for training and evaluation.
-
-- **Dataset source**: [Lenta.ru News CSV](https://github.com/your-repo/MLfinal/blob/main/lenta-ru-news.csv)  
-- **Topics included**:
-  - Путешествия
-  - Ценности
-  - Мир
-  - Наука и техника
-  - Экономика  
-
----
-
-## Comparative Analysis of Methods
-
-Below is a summary of classification algorithms we evaluated on the same training/test split (70% train, 30% test):
-
-| Method                             | Training/Inference Time | Accuracy            |
-| ---------------------------------- | ----------------------- | -------------------- |
-| Multinomial Naive Bayes            | 1 min 22 sec            | 0.9163              |
-| Gaussian Naive Bayes               | 13.1 sec                | 0.8357              |
-| Multinomial Logistic Regression    | 12.4 sec                | 0.9350              |
-| Decision Tree                      | 2.36 sec                | 0.6767              |
-| Random Forest                      | 4.48 sec                | 0.8923              |
-| XGBoost                            | 6 min 31 sec            | 0.9153              |
-| LightGBM                           | 1 min 41 sec            | 0.9180              |
-| Support Vector Machine (SVM)       | 2 min 55 sec            | 0.9477              |
-
----
-
-## Why Multinomial Naive Bayes?
-
-While SVM (Accuracy 0.9477) and Multinomial Logistic Regression (Accuracy 0.9350) achieved slightly higher accuracy, Multinomial Naive Bayes was chosen because:
-
-1. **Speed**: It trains in approximately **1 min 22 sec** and makes predictions almost instantly, which is critical for rapid iteration and deploying a lightweight web service.  
-2. **Competitive Accuracy**: With an accuracy of **0.9163**, it remains highly competitive compared to heavier algorithms.  
-3. **Simplicity & Interpretability**: The model pipeline uses a straightforward count vectorizer → TF-IDF transformer → Naive Bayes classifier, making it easy to understand and maintain.
-
----
+- **Text Classification:** Uses a trained model to determine the news category.
+- **Web Interface:** Intuitive interface built on FastAPI, Jinja2, HTML, CSS, and JavaScript.
+- **Prediction History:** Stores all predictions in a PostgreSQL database.
+- **UI testing:** Streamlit framework was used as a tool to test the project for detailed viewing.
 
 ## Project Structure
 
 ```
 
-MLfinal/
-├── app.py                     # Flask web application
-├── lenta\_nb\_model.joblib       # Trained MultinomialNB pipeline (auto-generated)
-├── lenta-ru-news.csv           # Original Lenta.ru dataset (subset used)
-├── preprocess.py               # Data preprocessing & model training script
-├── requirements.txt            # Python dependencies
-├── README.md                   # This file
-├── templates/
-│   └── index.html             # HTML template for the web interface
-├── **pycache**/
-│   └── text\_utils.cpython-313.pyc
-└── venv/                       # Python virtual environment (ignored by Git)
-├── bin/
-├── include/
-├── lib/
-├── lib64 -> lib
-└── pyvenv.cfg
+.
+├── app.py                      # Main FastAPI application file, classification logic, and DB interaction.
+├── lenta\_nb\_model.joblib       # Pre-trained Naive Bayes model file (loaded by the application).
+├── preprocess.py               # (Original) text preprocessing logic, whose functions are integrated into app.py.
+├── requirements.txt            # List of Python dependencies.
+├── static/                     # Directory for static files (CSS, JavaScript).
+│   └── style.css               # Stylesheet for UI design.
+├── templates/                  # Directory for HTML-templates Jinja2.
+│   └── index.html              # Main HTML template for the web page.
+└── venv/                       # Python virtual environment (recommended).
 
 ````
 
----
+## Installation and Setup
 
-## Installation
+To run the application, follow these steps:
 
-1. **Clone the repository**  
-   ```bash
-   git clone https://github.com/ShadowFighterr/MLfinal.git
-   cd MLfinal
+### 1. Prerequisites
+
+**Python 3.x:** Ensure you have Python version 3.7 or higher installed.
+
+**PostgreSQL:** Install and configure PostgreSQL on your system.
+
+PostgreSQL Installation (Ubuntu):
+
+```bash
+sudo apt update
+sudo apt install postgresql postgresql-contrib
 ````
 
-2. **Create & activate a virtual environment**
+Setting password for postgres user:
 
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate
-   ```
+```bash
+sudo -i -u postgres
+psql
+\password postgres
+# Enter and confirm your password (e.g., Azamat06)
+\q
+exit
+```
 
-3. **Install dependencies**
+**pgAdmin 4 (recommended):** A graphical tool for managing PostgreSQL.
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+pgAdmin 4 Installation (Ubuntu):
 
-   > **Note**: If you run into issues installing `pymorphy3`, ensure that `pymorphy3-dicts-ru` is installed. You can do:
-   >
-   > ```bash
-   > pip install pymorphy3 pymorphy3-dicts-ru
-   > ```
+```bash
+curl -fsS https://www.pgadmin.org/static/packages_pgadmin_org.pub | sudo gpg --dearmor -o /usr/share/keyrings/packages-pgadmin-org.gpg
+sudo sh -c 'echo "deb [signed-by=/usr/share/keyrings/packages-pgadmin-org.gpg] https://ftp.postgresql.org/pub/pgadmin/pgadmin4/apt/$(lsb_release -cs) pgadmin4 main" > /etc/apt/sources.list.d/pgadmin4.list && apt update'
+sudo apt install pgadmin4
+```
 
----
+### 2. Database Setup
+
+Using pgAdmin 4 or psql, create the database and table for storing predictions:
+
+Create a database: `news_predictions_db` (or use `postgres`).
+
+Create the `predictions_history` table:
+
+```sql
+CREATE TABLE predictions_history (
+    id SERIAL PRIMARY KEY,
+    news_text TEXT NOT NULL,
+    prediction VARCHAR(255) NOT NULL,
+    timestamp TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
+);
+```
+
+### 3. Python Project Setup
+
+Clone the repository (if applicable) or ensure you have all project files.
+
+Create a virtual environment (recommended):
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+(Ensure `requirements.txt` contains `fastapi`, `uvicorn[standard]`, `jinja2`, `psycopg2-binary`, `nltk`, `pymorphy3`, `joblib`, `scikit-learn` - if the model uses it).
+
+If `requirements.txt` is missing, you can create it by running:
+
+```bash
+pip install fastapi uvicorn[standard] jinja2 psycopg2-binary nltk pymorphy3 joblib scikit-learn
+pip freeze > requirements.txt
+```
+
+Download necessary NLTK data (this is done automatically in your `app.py`, but it's good to ensure):
+
+```python
+import nltk
+nltk.download('punkt')
+nltk.download('stopwords')
+# Possibly also 'punkt_tab' if required for pymorphy
+```
+
+Place the model: Ensure `lenta_nb_model.joblib` is in the project's root directory, next to `app.py`.
+
+Update DB Configuration: Open `app.py` and MUST replace `your_strong_password` with your actual password for the `postgres` user in the `DB_PASSWORD` line:
+
+```python
+DB_PASSWORD = os.getenv("DB_PASSWORD", "Azamat06") # <-- Ensure this is your password
+```
+
+### 4. Running the Application
+
+Start the FastAPI server from the project's root directory:
+
+```bash
+uvicorn app:app --reload --host 127.0.0.1 --port 8000
+```
+
+The application will be available at: [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
 ## Usage
 
-### Data Preprocessing & Model Training
+Open the specified address in your web browser.
 
-1. **Run `preprocess.py`**
-   This script will:
+In the center of the page, you will see a field for entering news text and a "Predict Category" button.
 
-   * Load and filter the Lenta.ru dataset to the five chosen topics (2,000 articles each).
-   * Perform Russian-language text preprocessing (tokenization, lemmatization via `pymorphy3`, removal of stop words & punctuation).
-   * Vectorize the preprocessed text with `CountVectorizer` → `TfidfTransformer`.
-   * Train a `MultinomialNB` pipeline and evaluate accuracy on a held-out test set.
-   * Save the trained model to `lenta_nb_model.joblib`.
+On the left, there will be a sidebar with "Prediction History".
 
-   ```bash
-   python preprocess.py
-   ```
+Enter news text into the input field and click "Predict Category".
 
-2. **Verify the model**
-   After successful training, you should see printed output similar to:
+The application will display the predicted category and automatically save the entry to history.
 
-   ```
-   accuracy 0.9163333333333333
-   (classification report with precision, recall, f1-score for each topic)
-   Model saved to lenta_nb_model.joblib
-   ```
+If you try to save the same news with the same prediction, the application will inform you that the entry already exists and will not create a duplicate.
 
-   At this point, `lenta_nb_model.joblib` will exist in the project root.
+Each history entry in the sidebar is presented as a brief title. Click on the title to expand and see the full news text and its predicted category.
 
-### Launching the Web App
+## Functionality
 
-1. **Ensure the model file is present**
-   Confirm that `lenta_nb_model.joblib` is in the project directory (if you did not train locally, you can download it from the GitHub release or from a teammate).
+* **Classification:** Input field for news text, which is processed and classified.
+* **Result Display:** The predicted category is displayed on the main page.
+* **DB Storage:** The entered text, predicted category, and timestamp are saved to the `predictions_history` table in PostgreSQL.
+* **Duplicate Check:** A check is performed when submitting a new prediction to avoid re-saving identical data.
+* **Sidebar History:** A list of recent predictions is displayed in an interactive sidebar.
+* **Expandable Elements:** Each history entry is presented as an "accordion," allowing you to hide or show the full news text and prediction result.
 
-2. **Run the Flask app**
+## Technologies
 
-   ```bash
-   python app.py
-   ```
+* **Python:** Main development language.
+* **FastAPI:** High-performance web framework for building APIs.
+* **Uvicorn:** ASGI server for running FastAPI.
+* **Jinja2:** Templating engine for generating dynamic HTML.
+* **PostgreSQL:** Relational database for persistent data storage.
+* **Psycopg2:** PostgreSQL adapter for Python.
+* **NLTK (Natural Language Toolkit):** Library for natural language processing (tokenization, stop words).
+* **PyMorphy3:** Morphological analyzer for the Russian language (lemmatization).
+* **Joblib:** For serializing/deserializing trained models.
+* **Scikit-learn:** Assumed that the `lenta_nb_model.joblib` model was trained using this library.
+* **HTML, CSS, JavaScript:** For frontend development and interactivity.
+* **Streamlit:** For analyzing predictions, collecting logs, and testing functionality.
 
-   By default, Flask runs on `http://127.0.0.1:5000/` in debug mode.
+## Deployment
 
-3. **Open the interface**
-   Navigate to `http://127.0.0.1:5000/` in your web browser. You will see a simple form prompting you to paste or type in news text. After clicking **Классифицировать**, the predicted topic (one of the five) will be displayed.
-
----
-
-## Dependencies
-
-All required packages are listed in `requirements.txt`. Key libraries include:
-
-* **pandas**, **numpy**, **scikit-learn**, **joblib**
-  For data handling, model building, and serialization.
-* **nltk**, **pymorphy3**, **pymorphy3-dicts-ru**
-  For Russian-language tokenization, lemmatization, and stopword removal.
-* **Flask** (or optionally FastAPI/uvicorn)
-  For serving the web application.
-* **tqdm**
-  To show progress bars during dataset filtering.
-* **pydantic**, **uvicorn**, **fastapi**
-  Included in case you prefer to swap out Flask for FastAPI in the future.
-
----
-
-## Contributing
-
-1. Fork this repository.
-2. Create a new feature branch:
-
-   ```bash
-   git checkout -b feature/YourFeatureName
-   ```
-3. Make your changes (e.g., add new preprocessing steps, test different classifiers, improve the UI).
-4. Commit and push:
-
-   ```bash
-   git commit -m "Add something useful"
-   git push origin feature/YourFeatureName
-   ```
-5. Open a pull request.
-
-Please ensure that any new code is documented, dependencies are updated in `requirements.txt`, and your changes do not break the existing pipeline.
-
----
-
-## Contact
-
-If you have questions or suggestions, feel free to open an issue or reach out to the repository owner.
-GitHub: [ShadowFighterr/MLfinal](https://github.com/ShadowFighterr/MLfinal)
-
-```
-
----
+I have deployed the project on Render.com using Docker and also stored a database there: https://practice-fkig.onrender.com/
