@@ -1,0 +1,151 @@
+/* Базовые стили для тела страницы */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex; /* Используем flexbox для размещения основной части и сайдбара */
+    min-height: 100vh; /* Минимальная высота, чтобы сайдбар был на всю высоту */
+    background-color: #f4f7f6;
+    color: #333;
+}
+
+/* Стили для основной части контента */
+.main-content {
+    flex-grow: 1; /* Основной контент занимает все доступное пространство */
+    padding: 20px;
+    max-width: 800px; /* Ограничиваем ширину для лучшего чтения */
+    margin-left: 20px; /* Отступ от сайдбара */
+}
+
+/* Стили для боковой панели */
+.sidebar {
+    width: 300px; /* Фиксированная ширина сайдбара */
+    background-color: #e0f2f7; /* Светло-голубой фон */
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1); /* Тень для отделения */
+    overflow-y: auto; /* Прокрутка, если история длинная */
+}
+
+/* Стили для заголовков */
+h1, h2, h3 {
+    color: #2c3e50;
+}
+
+/* Стили для полей ввода и кнопок */
+textarea {
+    width: 98%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    min-height: 150px;
+    box-sizing: border-box; /* Учитываем padding в общей ширине */
+}
+
+button {
+    background-color: #28a745; /* Зеленая кнопка */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+/* Стили для сообщений (успех, предупреждение, информация) */
+.message {
+    padding: 10px 15px;
+    border-radius: 4px;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+.message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.message.warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+}
+
+.message.info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+/* Стили для разделителей */
+hr {
+    border: 0;
+    height: 1px;
+    background: #ccc;
+    margin: 20px 0;
+}
+
+/* Стили для expander (аккордеона) */
+.expander {
+    margin-bottom: 10px;
+    border: 1px solid #cfe2f3; /* Светлая рамка */
+    border-radius: 5px;
+    background-color: #eaf6fa; /* Очень светлый фон для экспандера */
+}
+
+.expander-header {
+    background-color: #d9edf7; /* Немного темнее фон для заголовка */
+    padding: 10px 15px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    color: #31708f;
+    border-bottom: 1px solid #bce8f1;
+    border-radius: 5px 5px 0 0; /* Закругляем только верхние углы */
+}
+
+.expander-header::after {
+    content: '▼'; /* Стрелка вниз */
+    font-size: 0.8em;
+    transition: transform 0.2s;
+}
+
+.expander-header.active::after {
+    content: '▲'; /* Стрелка вверх */
+    transform: rotate(0deg);
+}
+
+.expander-content {
+    padding: 15px;
+    background-color: #f7fafd; /* Белее фон для контента */
+    border-radius: 0 0 5px 5px; /* Закругляем только нижние углы */
+    display: none; /* Скрыто по умолчанию */
+}
+
+/* Стили для сообщений внутри экспандера */
+.expander-content .message {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 8px 12px;
+    font-size: 0.9em;
+}
+
+.expander-content .message.info {
+    background-color: #e0f2f7;
+    color: #0c5460;
+    border-color: #bee5eb;
+}
+
+.expander-content .message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border-color: #c3e6cb;
+}

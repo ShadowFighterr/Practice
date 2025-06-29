@@ -3,25 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Классификация новостей Lenta.ru</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Классификатор новостей Lenta.ru</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/style.css') }}">
 </head>
-<body class="bg-light">
-  <div class="container py-5">
-    <h1 class="mb-4">Классификатор тем новостей</h1>
-    <form method="post">
-      <div class="mb-3">
-        <label for="news_text" class="form-label">Введите текст новости</label>
-        <textarea class="form-control" id="news_text" name="news_text" rows="6" required></textarea>
-      </div>
-      <button type="submit" class="btn btn-primary">Классифицировать</button>
-    </form>
+<body>
+    <div class="sidebar">
+        <h2>История предсказаний</h2>
+        {% if history %}
+            {% for entry in history %}
+            <div class="expander">
+                <div class="expander-header">
+                    <span>({{ entry.timestamp.split(' ')[1][:5] }}) {{ entry.short_text }} ({{ entry.prediction }})</span>
+                </div>
+                <div class="expander-content">
+                    <strong>Дата/Время:</strong> {{ entry.timestamp }}<br>
+                    <strong>Исходный текст:</strong>
+                    <div class="message info">{{ entry.text }}</div>
+                    <strong>Предсказанная категория:</strong>
+                    <div class="message success">{{ entry.prediction }}</div>
+                    <hr>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="message info">История предсказаний пока пуста. Сделайте первое предсказание!</div>
+        {% endif %}
+    </div>
 
-    {% if prediction %}
-      <div class="alert alert-success mt-4" role="alert">
-        Предсказанная тема: <strong>{{ prediction }}</strong>
-      </div>
-    {% endif %}
-  </div>
+    <div class="main-content">
+        <h1>Классификатор новостей</h1>
+        <hr>
+        <h2>Введите текст новости для классификации:</h2>
+
+        <form method="post" action="/">
+            <label for="news_input">Текст новости:</label><br>
+            <textarea id="news_input" name="news_text" rows="10" placeholder="Например: В Астане открылся новый технологический парк, привлекающий молодых специалистов в сфере IT.">{{ user_input if user_input is not none else "" }}</textarea><br>
+            <button type="submit">Предсказать категорию</button>
+        </form>
+
+        {% if prediction %}
+            <div class="message {{ message_type }}">
+                {{ prediction }}
+            </div>
+        {% endif %}
+
+        <hr>
+        <div class="message info">Это приложение использует предварительно обученную модель для классификации новостей.</div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const expanderHeaders = document.querySelectorAll('.expander-header');
+
+            expanderHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    const content = this.nextElementSibling;
+                    if (content.style.display === 'block') {
+                        content.style.display = 'none';
+                    } else {
+                        content.style.display = 'block';
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

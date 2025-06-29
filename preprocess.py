@@ -13,7 +13,7 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 
 # Download NLTK resources
-nltk.download('punkt')
+nltk.download('punkt_tab')
 nltk.download('stopwords')
 
 # Initialize morphological analyzer and stopwords once

@@ -18,9 +18,6 @@ venv/
 *.tmp
 *.swp
 
-# Model and dataset files (if you don't want them in version control)
-lenta-ru-news.csv
-
 # VSCode settings (optional)
 .vscode/
 

@@ -3,20 +3,24 @@ pandas
 numpy
 scikit-learn
 joblib
+psycopg2-binary
 
 # Text preprocessing (choose one)
 nltk
 pymorphy3
 pymorphy3-dicts-ru
 
-# Flask web service
+# FastAPI web service
 fastapi
 uvicorn[standard]
 pydantic
-flask 
+jinja2
 
 # Progress bar
 tqdm
 
 #Deployment
 gunicorn
+
+#Frontend testing
+streamlit
