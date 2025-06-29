@@ -1,0 +1,9 @@
+.git
+.gitignore
+__pycache__/
+venv/
+*.pyc
+*.log
+.DS_Store
+streamlit_test.py 
+
