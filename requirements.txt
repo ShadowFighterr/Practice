@@ -21,6 +21,7 @@ tqdm
 
 #Deployment
 gunicorn
+python-multipart
 
 #Frontend testing
 streamlit
