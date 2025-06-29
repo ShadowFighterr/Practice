@@ -56,7 +56,7 @@ Setting password for postgres user:
 sudo -i -u postgres
 psql
 \password postgres
-# Enter and confirm your password (e.g., Azamat06)
+# Enter and confirm your password 
 \q
 exit
 ```
@@ -128,7 +128,7 @@ Place the model: Ensure `lenta_nb_model.joblib` is in the project's root directo
 Update DB Configuration: Open `app.py` and MUST replace `your_strong_password` with your actual password for the `postgres` user in the `DB_PASSWORD` line:
 
 ```python
-DB_PASSWORD = os.getenv("DB_PASSWORD", "Azamat06") # <-- Ensure this is your password
+DB_PASSWORD = os.getenv("DB_PASSWORD", "YourPassword") # <-- Ensure this is your password
 ```
 
 ### 4. Running the Application
