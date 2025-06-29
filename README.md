@@ -1,8 +1,4 @@
-Azamat, wishing you a productive coding session today! 🌟
-
-Here’s your text **formatted as a clean README.md**, with your exact wording unchanged:
-
----
+Ubaidullauly Azamat. IT-2305. Industrial Practice.
 
 ```markdown
 # News Classifier
